@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logobgremove.png";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -25,13 +26,12 @@ const Sidebar = () => {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-slate-900 text-white flex flex-col shadow-2xl z-50">
       {/* Logo */}
-      <div className="p-8 border-b border-white/10 flex items-center gap-3">
-        <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
-          <span className="font-bold text-lg">F</span>
-        </div>
-        <span className="font-serif text-2xl font-bold tracking-wide">
-          Foodie
-        </span>
+      <div className="p-6 border-b border-white/10 flex items-center justify-center">
+        <img
+          src={logo}
+          alt="Foodie Logo"
+          className="h-35 w-full object-contain"
+        />
       </div>
 
       {/* Navigation */}
