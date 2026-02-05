@@ -1,15 +1,56 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import { Check, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Check, MapPin, Phone, Mail, Clock, Search } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import Logodemo from "../assets/logobgremove.png";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const navigate = useNavigate();
+  const galleryRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".gallery-item", {
+        scale: 0.5,
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        stagger: {
+          each: 0.1,
+          grid: [2, 3],
+          from: "start",
+        },
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: galleryRef.current,
+          start: "top 90%",
+        },
+      });
+
+      gsap.to(".gallery-item", {
+        y: -5,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: {
+          each: 0.3,
+          from: "random",
+        },
+      });
+    }, galleryRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const galleryItems = [
     {
@@ -50,9 +91,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Column 1: Brand Info */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-display font-bold text-stone-800">
-              Foodie<span className="text-amber-600">.</span>
-            </h2>
+            <Link
+              to="/"
+              className="inline-block transform hover:scale-105 transition-transform duration-300"
+            >
+              <img
+                src={Logodemo}
+                alt="Bharti Food Logo"
+                className="w-24 h-24 object-contain contrast-125"
+              />
+            </Link>
             <p className="text-sm leading-loose">
               There cursus massa at urnaaculis estieSed aliquamellus vitae ultrs
               condmentum leo massamollis its estiegittis miristum.
@@ -134,14 +182,14 @@ const Footer = () => {
             <h3 className="text-xl font-bold text-stone-800 mb-6 font-display">
               Social Gallery
             </h3>
-            <div className="grid grid-cols-3 gap-2">
+            <div ref={galleryRef} className="grid grid-cols-3 gap-2">
               {galleryItems.map((item, idx) => (
                 <div
                   key={idx}
                   onClick={() =>
                     navigate("/menu", { state: { category: item.category } })
                   }
-                  className="relative aspect-square rounded-full overflow-hidden border-2 border-stone-200 hover:border-amber-400 cursor-pointer transition-colors group"
+                  className="gallery-item relative aspect-square rounded-full overflow-hidden border-2 border-stone-200 hover:border-amber-400 cursor-pointer transition-colors group"
                   title={`View ${item.category}`}
                 >
                   <img
@@ -149,6 +197,11 @@ const Footer = () => {
                     alt={item.category}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-amber-600/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                    <div className="bg-white/90 p-2 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500 -rotate-45 group-hover:rotate-0">
+                      <Search size={16} className="text-amber-600" />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

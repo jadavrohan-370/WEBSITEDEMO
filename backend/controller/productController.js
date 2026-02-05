@@ -52,7 +52,7 @@ export const getProduct = async (req, res) => {
 // Create product
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, category, description, image, stock } = req.body;
+    const { name, price, category, description, image, stock } = req.body || {};
 
     // Validation
     if (!name || !price || !category || !description || !image) {
@@ -92,7 +92,7 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, category, description, image, stock } = req.body;
+    const { name, price, category, description, image, stock } = req.body || {};
 
     let product = await Product.findById(id);
 

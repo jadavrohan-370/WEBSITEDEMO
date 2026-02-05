@@ -12,59 +12,18 @@ if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir, { recursive: true });
 }
 
-// Upload image (Base64 to file)
+// Upload image (Multer based)
 export const uploadImage = async (req, res) => {
   try {
-    const { image } = req.body;
-
-    if (!image) {
+    if (!req.file) {
       return res.status(400).json({
         success: false,
-        message: "No image provided",
+        message: "No image file provided",
       });
     }
 
-    // Validate base64
-    if (!image.startsWith("data:image/")) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid image format. Expected base64 encoded image",
-      });
-    }
-
-    // Extract image type and data
-    const matches = image.match(/^data:image\/([a-zA-Z0-9]*);base64,(.+)$/);
-    if (!matches) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid image format",
-      });
-    }
-
-    const imageType = matches[1];
-    const base64Data = matches[2];
-
-    // Validate image type
-    const allowedTypes = ["jpeg", "jpg", "png", "webp", "gif"];
-    if (!allowedTypes.includes(imageType.toLowerCase())) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid image type. Allowed: JPEG, PNG, WEBP, GIF",
-      });
-    }
-
-    // Generate unique filename
-    const timestamp = Date.now();
-    const randomString = Math.random().toString(36).substring(7);
-    const filename = `product_${timestamp}_${randomString}.${imageType}`;
-    const filepath = path.join(imagesDir, filename);
-
-    // Convert base64 to buffer and save
-    const imageBuffer = Buffer.from(base64Data, "base64");
-
-    fs.writeFileSync(filepath, imageBuffer);
-
-    // Return the image URL (relative path that can be accessed via backend)
+    // Multer has already saved the file
+    const filename = req.file.filename;
     const imageUrl = `/public/images/${filename}`;
 
     res.status(201).json({
@@ -74,7 +33,7 @@ export const uploadImage = async (req, res) => {
       filename,
     });
   } catch (error) {
-    console.error("Error uploading image:", error);
+    console.error("Error in uploadImage controller:", error);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -85,7 +44,7 @@ export const uploadImage = async (req, res) => {
 // Delete image
 export const deleteImage = async (req, res) => {
   try {
-    const { filename } = req.body;
+    const { filename } = req.body || {};
 
     if (!filename) {
       return res.status(400).json({

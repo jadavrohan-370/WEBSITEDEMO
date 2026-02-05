@@ -214,9 +214,6 @@ const FeedBack = () => {
         duration: 30,
         ease: "none",
         repeat: -1,
-        onReverseComplete: () => {
-          gsap.set(slider2, { x: -scrollWidth2 });
-        },
       });
 
       // --- Motion Capture (Scroll Velocity) ---
@@ -235,20 +232,21 @@ const FeedBack = () => {
         },
       });
 
-      // Pause on hover
-      const handleMouseEnter = (tl) => tl.pause();
-      const handleMouseLeave = (tl) => tl.play();
+      const handleMouseEnter1 = () => tl1.pause();
+      const handleMouseLeave1 = () => tl1.play();
+      const handleMouseEnter2 = () => tl2.pause();
+      const handleMouseLeave2 = () => tl2.play();
 
-      slider1.addEventListener("mouseenter", () => handleMouseEnter(tl1));
-      slider1.addEventListener("mouseleave", () => handleMouseLeave(tl1));
-      slider2.addEventListener("mouseenter", () => handleMouseEnter(tl2));
-      slider2.addEventListener("mouseleave", () => handleMouseLeave(tl2));
+      slider1.addEventListener("mouseenter", handleMouseEnter1);
+      slider1.addEventListener("mouseleave", handleMouseLeave1);
+      slider2.addEventListener("mouseenter", handleMouseEnter2);
+      slider2.addEventListener("mouseleave", handleMouseLeave2);
 
       return () => {
-        slider1.removeEventListener("mouseenter", () => handleMouseEnter(tl1));
-        slider1.removeEventListener("mouseleave", () => handleMouseLeave(tl1));
-        slider2.removeEventListener("mouseenter", () => handleMouseEnter(tl2));
-        slider2.removeEventListener("mouseleave", () => handleMouseLeave(tl2));
+        slider1.removeEventListener("mouseenter", handleMouseEnter1);
+        slider1.removeEventListener("mouseleave", handleMouseLeave1);
+        slider2.removeEventListener("mouseenter", handleMouseEnter2);
+        slider2.removeEventListener("mouseleave", handleMouseLeave2);
       };
     }, containerRef);
 

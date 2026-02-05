@@ -128,10 +128,16 @@ const Product = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 section-header">
-          <h5 className="inline-block px-5 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-600 text-sm font-bold tracking-widest uppercase mb-4">
+          <h5
+            onClick={() => navigate("/product")}
+            className="inline-block px-5 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-600 text-sm font-bold tracking-widest uppercase mb-4 cursor-pointer hover:bg-orange-100 transition-colors"
+          >
             Product
           </h5>
-          <h2 className="text-5xl md:text-6xl font-display font-bold text-stone-900 mb-6 drop-shadow-sm">
+          <h2
+            onClick={() => navigate("/add-order")}
+            className="text-5xl md:text-6xl font-display font-bold text-stone-900 mb-6 drop-shadow-sm cursor-pointer hover:text-orange-600 transition-colors"
+          >
             Product{" "}
             <span className="text-orange-600 font-serif italic">Page</span>
           </h2>
@@ -188,7 +194,10 @@ const Product = () => {
               filteredEvents.map((event) => (
                 <div
                   key={event._id}
-                  className="event-card group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 flex flex-col h-full"
+                  onClick={() =>
+                    navigate("/add-order", { state: { item: event } })
+                  }
+                  className="event-card group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 flex flex-col h-full cursor-pointer"
                 >
                   {/* Image Container */}
                   <div className="relative h-80 overflow-hidden">

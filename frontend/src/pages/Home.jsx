@@ -106,10 +106,10 @@ const Home = () => {
                   Contact Us
                 </button>
                 <button
-                  onClick={() => navigate("/menu")}
+                  onClick={() => navigate("/add-order")}
                   className="bg-white text-amber-600 border-2 border-amber-600 px-8 py-4 rounded-full hover:bg-amber-50 transition-all shadow-lg font-semibold hover:-translate-y-1 transform active:scale-95"
                 >
-                  View Menu
+                  View Products
                 </button>
               </div>
             </div>

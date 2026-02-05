@@ -19,7 +19,7 @@ const Sidebar = () => {
     { path: "/", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/products", icon: ShoppingBag, label: "Products" },
     { path: "/orders", icon: ClipboardList, label: "Orders" },
-    { path: "/menu", icon: UtensilsCrossed, label: "Menu Management" },
+    { path: "/Product", icon: UtensilsCrossed, label: "Product Management" },
     { path: "/messages", icon: MessageSquare, label: "Messages" },
   ];
 
@@ -37,7 +37,7 @@ const Sidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
         <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-          Main Menu
+          Main Product
         </p>
         {navItems.map((item) => (
           <NavLink

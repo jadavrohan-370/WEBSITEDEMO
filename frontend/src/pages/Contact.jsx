@@ -28,6 +28,7 @@ const Contact = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
@@ -64,17 +65,48 @@ const Contact = () => {
         },
       });
 
+      // Form Title Letter Animation
+      gsap.from(".form-title span", {
+        y: 100,
+        rotateX: -90,
+        opacity: 0,
+        stagger: 0.03,
+        duration: 1,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: ".form-card",
+          start: "top 80%",
+        },
+      });
+
+      // Form Subtitle Animation
+      gsap.from(".form-subtitle", {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".form-card",
+          start: "top 80%",
+        },
+      });
+
       // Map Reveal
       gsap.from(mapRef.current, {
         opacity: 0,
-        scale: 0.95,
-        duration: 1.5,
-        ease: "power3.out",
+        y: 30,
+        duration: 1,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: mapRef.current,
-          start: "top 85%",
+          start: "top 90%",
+          toggleActions: "play none none none",
         },
       });
+
+      // Refresh ScrollTrigger to account for dynamic content height
+      ScrollTrigger.refresh();
     }, containerRef);
 
     return () => ctx.revert();
@@ -251,10 +283,14 @@ const Contact = () => {
 
           {/* Right Side: Elegant Form Card */}
           <div className="lg:col-span-7 p-12 lg:p-16 form-card">
-            <h3 className="text-3xl font-display font-bold text-stone-900 mb-2">
-              Send Message
+            <h3 className="text-4xl font-display font-bold text-stone-900 mb-2 form-title flex flex-wrap overflow-hidden">
+              {"Send a Message".split("").map((char, index) => (
+                <span key={index} className="inline-block">
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
             </h3>
-            <p className="text-stone-500 mb-10">
+            <p className="text-stone-500 mb-10 form-subtitle">
               Use the form below to share your requirements with us.
             </p>
 
@@ -283,7 +319,7 @@ const Contact = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Jane Doe"
+                      placeholder="Your Name"
                       className="w-full pl-8 py-3 bg-transparent outline-none font-medium text-stone-900 placeholder:text-stone-300"
                     />
                   </div>

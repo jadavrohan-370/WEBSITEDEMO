@@ -143,7 +143,7 @@ const Dashboard = () => {
             color="bg-indigo-500"
           />
           <StatCard
-            title="Menu Items"
+            title="Product Items"
             value={stats.products}
             change="Active"
             icon={Utensils}

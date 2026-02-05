@@ -6,10 +6,21 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const apiClient = axios.create({
   baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
+
+export const BACKEND_URL = API_URL.replace("/api", "");
+
+export const getImageUrl = (path) => {
+  if (!path) return "";
+  if (
+    path.startsWith("http") ||
+    path.startsWith("blob:") ||
+    path.startsWith("data:")
+  ) {
+    return path;
+  }
+  return `${BACKEND_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+};
 
 // Request interceptor to add the auth token to every request
 apiClient.interceptors.request.use(
@@ -73,8 +84,11 @@ export const orderService = {
 };
 
 export const imageService = {
-  upload: (imageBase64) =>
-    apiClient.post("/images/upload", { image: imageBase64 }),
+  upload: (imageFile) => {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    return apiClient.post("/images/upload", formData);
+  },
   delete: (filename) =>
     apiClient.delete("/images/delete", { data: { filename } }),
 };

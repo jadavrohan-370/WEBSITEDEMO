@@ -10,11 +10,14 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
-import { productService, imageService } from "../services/apiClient";
+import {
+  productService,
+  imageService,
+  getImageUrl,
+} from "../services/apiClient";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreview, setImagePreview] = useState("");
@@ -31,7 +34,6 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      setLoading(true);
       const data = await productService.getAll();
       if (data.success) {
         setProducts(data.products);
@@ -39,8 +41,6 @@ const Products = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
       toast.error("Failed to load products");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -143,7 +143,7 @@ const Products = () => {
     });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -160,49 +160,33 @@ const Products = () => {
     }
 
     setUploadingImage(true);
-    const reader = new FileReader();
 
-    reader.onload = async (event) => {
-      const base64String = event.target?.result;
-      console.log("Base64 string created, length:", base64String.length);
-      setImagePreview(base64String);
+    // Create a local preview
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
 
-      // Upload image to backend
-      try {
-        console.log("Uploading image to backend...");
-        const uploadData = await imageService.upload(base64String);
-        console.log("Upload response:", uploadData);
+    // Upload image to backend
+    try {
+      console.log("Uploading image to backend via Multer...");
+      const uploadData = await imageService.upload(file);
+      console.log("Upload response:", uploadData);
 
-        if (uploadData.success) {
-          console.log("Setting image URL:", uploadData.imageUrl);
-          setCurrentProduct((prev) => {
-            const updated = {
-              ...prev,
-              image: uploadData.imageUrl,
-            };
-            console.log("Updated currentProduct:", updated);
-            return updated;
-          });
-          toast.success("Image uploaded successfully ✓");
-        } else {
-          console.error("Upload failed:", uploadData.message);
-          toast.error(uploadData.message || "Failed to upload image");
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        toast.error(error.response?.data?.message || "Failed to upload image");
-      } finally {
-        setUploadingImage(false);
+      if (uploadData.success) {
+        console.log("Setting image URL:", uploadData.imageUrl);
+        setCurrentProduct((prev) => ({
+          ...prev,
+          image: uploadData.imageUrl,
+        }));
+        toast.success("Image uploaded successfully ✓");
+      } else {
+        toast.error(uploadData.message || "Failed to upload image");
       }
-    };
-
-    reader.onerror = () => {
-      console.error("FileReader error");
-      toast.error("Failed to read file");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error(error.response?.data?.message || "Failed to upload image");
+    } finally {
       setUploadingImage(false);
-    };
-
-    reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -265,7 +249,7 @@ const Products = () => {
                         <div className="w-12 h-12 rounded-lg bg-slate-100 overflow-hidden">
                           {product.image ? (
                             <img
-                              src={product.image}
+                              src={getImageUrl(product.image)}
                               alt={product.name}
                               className="w-full h-full object-cover"
                             />
@@ -457,7 +441,7 @@ const Products = () => {
                   {imagePreview ? (
                     <div className="flex flex-col items-center gap-2">
                       <img
-                        src={imagePreview}
+                        src={getImageUrl(imagePreview)}
                         alt="Preview"
                         className="h-24 w-24 object-cover rounded-lg"
                       />
