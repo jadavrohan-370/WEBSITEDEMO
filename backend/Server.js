@@ -57,6 +57,12 @@ app.options(/.*/, cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Ensure req.body is always an object to prevent destructuring errors
+app.use((req, res, next) => {
+  if (!req.body) req.body = {};
+  next();
+});
+
 // Serve static files (images)
 app.use("/public", express.static(path.join(__dirname, "public")));
 

@@ -15,7 +15,7 @@ export const registerAdmin = async (req, res) => {
       });
     }
 
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword } = req.body || {};
 
     // Validation
     if (!name || !email || !password || !confirmPassword) {
@@ -81,7 +81,7 @@ export const loginAdmin = async (req, res) => {
       });
     }
 
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
     // Validation
     if (!email || !password) {

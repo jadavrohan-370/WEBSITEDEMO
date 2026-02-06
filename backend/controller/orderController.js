@@ -4,7 +4,7 @@ const ALLOWED_STATUSES = ["pending", "preparing", "completed", "cancelled"];
 
 export const createOrder = async (req, res) => {
   try {
-    const { name, phone, items, price, address, notes } = req.body;
+    const { name, phone, items, price, address, notes } = req.body || {};
 
     if (!name || !phone || !items || !address) {
       return res.status(400).json({
@@ -59,7 +59,7 @@ export const getOrderById = async (req, res) => {
 
 export const updateOrderStatus = async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status } = req.body || {};
     if (!ALLOWED_STATUSES.includes(status)) {
       return res.status(400).json({
         success: false,

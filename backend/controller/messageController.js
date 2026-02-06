@@ -58,7 +58,7 @@ export const getMessage = async (req, res) => {
 // Create message (from frontend)
 export const createMessage = async (req, res) => {
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { name, email, phone, subject, message } = req.body || {};
 
     // Validation
     if (!name || !email || !phone || !subject || !message) {
@@ -95,7 +95,7 @@ export const createMessage = async (req, res) => {
 export const replyToMessage = async (req, res) => {
   try {
     const { id } = req.params;
-    const { reply } = req.body;
+    const { reply } = req.body || {};
 
     if (!reply) {
       return res.status(400).json({
