@@ -1,31 +1,22 @@
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../utils/cloudinary.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Ensure storage directory exists
-const uploadDir = path.join(__dirname, "../public/images");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Storage configuration
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const timestamp = Date.now();
-    const randomString = Math.random().toString(36).substring(7);
-    const ext = path.extname(file.originalname);
-    cb(null, `product_${timestamp}_${randomString}${ext}`);
+// Cloudinary storage configuration
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "food-website/products",
+    allowed_formats: ["jpg", "jpeg", "png", "webp", "gif"],
+    public_id: (req, file) => {
+      const timestamp = Date.now();
+      const randomString = Math.random().toString(36).substring(7);
+      return `product_image_${timestamp}_${randomString}`;
+    },
   },
 });
 
-// File filter (only images)
+// File filter (redundant with CloudinaryStorage params but good for double checking)
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
   if (allowedTypes.includes(file.mimetype)) {

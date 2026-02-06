@@ -1,18 +1,6 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import cloudinary from "../utils/cloudinary.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Create images directory if it doesn't exist
-const imagesDir = path.join(__dirname, "../public/images");
-
-if (!fs.existsSync(imagesDir)) {
-  fs.mkdirSync(imagesDir, { recursive: true });
-}
-
-// Upload image (Multer based)
+// Upload image (Cloudinary based via Multer)
 export const uploadImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -22,13 +10,13 @@ export const uploadImage = async (req, res) => {
       });
     }
 
-    // Multer has already saved the file
-    const filename = req.file.filename;
-    const imageUrl = `/public/images/${filename}`;
+    // With CloudinaryStorage, req.file.path is the secure URL
+    const imageUrl = req.file.path;
+    const filename = req.file.filename; // This is the public_id in Cloudinary
 
     res.status(201).json({
       success: true,
-      message: "Image uploaded successfully",
+      message: "Image uploaded to Cloudinary successfully",
       imageUrl,
       filename,
     });
@@ -41,42 +29,35 @@ export const uploadImage = async (req, res) => {
   }
 };
 
-// Delete image
+// Delete image from Cloudinary
 export const deleteImage = async (req, res) => {
   try {
-    const { filename } = req.body || {};
+    const { filename } = req.body || {}; // This should be the Cloudinary public_id
 
     if (!filename) {
       return res.status(400).json({
         success: false,
-        message: "Filename is required",
+        message: "Cloudinary filename (public_id) is required",
       });
     }
 
-    const filepath = path.join(imagesDir, filename);
+    // Delete from Cloudinary
+    const result = await cloudinary.uploader.destroy(filename);
 
-    // Security: Prevent directory traversal
-    if (!filepath.startsWith(imagesDir)) {
-      return res.status(403).json({
-        success: false,
-        message: "Invalid file path",
-      });
-    }
-
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
+    if (result.result === "ok") {
       res.json({
         success: true,
-        message: "Image deleted successfully",
+        message: "Image deleted from Cloudinary successfully",
       });
     } else {
       res.status(404).json({
         success: false,
-        message: "Image not found",
+        message: "Image not found or already deleted on Cloudinary",
+        result,
       });
     }
   } catch (error) {
-    console.error("Error deleting image:", error);
+    console.error("Error deleting image from Cloudinary:", error);
     res.status(500).json({
       success: false,
       message: error.message,
