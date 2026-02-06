@@ -1,6 +1,7 @@
 import cloudinary from "../utils/cloudinary.js";
+import streamifier from "streamifier";
 
-// Upload image (Cloudinary based via Multer)
+// Upload image (Manual upload to Cloudinary)
 export const uploadImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -10,21 +11,40 @@ export const uploadImage = async (req, res) => {
       });
     }
 
-    // With CloudinaryStorage, req.file.path is the secure URL
-    const imageUrl = req.file.path;
-    const filename = req.file.filename; // This is the public_id in Cloudinary
+    // Upload to Cloudinary using a stream
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "food-website/products",
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          }
+        );
+
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+
+    const result = await uploadToCloudinary();
 
     res.status(201).json({
       success: true,
       message: "Image uploaded to Cloudinary successfully",
-      imageUrl,
-      filename,
+      imageUrl: result.secure_url,
+      filename: result.public_id, // This is the public_id in Cloudinary
     });
   } catch (error) {
     console.error("Error in uploadImage controller:", error);
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message || "Internal Server Error",
     });
   }
 };
