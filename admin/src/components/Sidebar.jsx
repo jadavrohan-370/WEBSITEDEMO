@@ -4,10 +4,8 @@ import logo from "../assets/logobgremove.png";
 import {
   LayoutDashboard,
   ShoppingBag,
-  UtensilsCrossed,
   MessageSquare,
   LogOut,
-  Settings,
   ClipboardList,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
@@ -19,7 +17,6 @@ const Sidebar = () => {
     { path: "/", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/products", icon: ShoppingBag, label: "Products" },
     { path: "/orders", icon: ClipboardList, label: "Orders" },
-    { path: "/Product", icon: UtensilsCrossed, label: "Product Management" },
     { path: "/messages", icon: MessageSquare, label: "Messages" },
   ];
 
@@ -44,7 +41,7 @@ const Sidebar = () => {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
+              `flex items-center gap-3 px-4 py-5 rounded-xl transition-all duration-300 group ${
                 isActive
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
                   : "text-slate-400 hover:bg-white/5 hover:text-white"

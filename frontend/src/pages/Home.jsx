@@ -5,7 +5,6 @@ import TextType from "../components/TextType";
 import Product from "./Product";
 import Contact from "./Contact";
 import About from "./About";
-import { Pizza, Banana } from "lucide-react";
 import FeedBack from "../components/FeedBack";
 const Home = () => {
   const containerRef = useRef(null);
@@ -121,7 +120,7 @@ const Home = () => {
               <div className="relative w-[450px] h-[450px]">
                 <div className="diamond-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-3xl shadow-2xl z-20">
                   <img
-                    src="https://plus.unsplash.com/premium_photo-1663858367001-89e5c92d1e0e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZvb2R8ZW58MHx8MHx8fDA%3D"
+                    src="https://imgs.search.brave.com/GdzK-5Zsz_0ov6nJxpPBZRpqskqHMtROkjwZa_QWHzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by91cmFkLWRh/bC1yb2FzdGVkLXBh/cGFkLWluZGlhbi0y/NjBudy0yMTY0Mzc1/ODA1LmpwZw"
                     alt="Delicious Food"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
@@ -129,39 +128,32 @@ const Home = () => {
 
                 <div className="diamond-item absolute top-0 left-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D"
-                    alt="Salad"
+                    src="https://imgs.search.brave.com/GdzK-5Zsz_0ov6nJxpPBZRpqskqHMtROkjwZa_QWHzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by91cmFkLWRh/bC1yb2FzdGVkLXBh/cGFkLWluZGlhbi0y/NjBudy0yMTY0Mzc1/ODA1LmpwZw"
+                    alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
                 </div>
                 <div className="diamond-item absolute top-0 right-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://plus.unsplash.com/premium_photo-1677000666741-17c3c57139a2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8U3BhZ2hldHRpfGVufDB8fDB8fHww"
-                    alt="Pizza"
+                    src="https://imgs.search.brave.com/GdzK-5Zsz_0ov6nJxpPBZRpqskqHMtROkjwZa_QWHzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by91cmFkLWRh/bC1yb2FzdGVkLXBh/cGFkLWluZGlhbi0y/NjBudy0yMTY0Mzc1/ODA1LmpwZw"
+                    alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
                 </div>
 
                 <div className="diamond-item absolute bottom-0 left-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://images.unsplash.com/photo-1624300629298-e9de39c13be5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWV4aWNhbiUyMGZvb2R8ZW58MHx8MHx8fDA%3D"
-                    alt="Sandwich"
+                    src="https://imgs.search.brave.com/GWfDFKeIHI_w9LGayKk7QLTSiN8BRx2c1d5Wp-kaSE0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzE3LzEyLzA4LzYy/LzM2MF9GXzE3MTIw/ODYyOTNfSGZxODlv/NVRNRnJ1TTJEZHBa/MW1oT3EyWFBIOGts/cGouanBn"
+                    alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
                 </div>
                 <div className="diamond-item absolute bottom-0 right-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGRyaW5rfGVufDB8fDB8fHww"
-                    alt="Green Salad"
+                    src="https://imgs.search.brave.com/j8douSyAGFwJO7jOhS3jpmMMe5CKQ2qMN9OykWITO3Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9taXhl/ZC12ZWdldGFibGUt/cGlja2xlLWluZGlh/bi1waWNrbGUtYXMt/bmFtZS1zdWdnZXN0/cy1tYWRlLW51bWJl/ci12ZWdldGFibGVz/LWNhbi12YXJ5LW9u/ZS1wbGFjZS0zODUx/MTcxOS5qcGc"
+                    alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
-                </div>
-
-                <div className="floating-icon absolute top-1/2 -left-12 -translate-y-1/2 text-amber-400/50 opacity-100 text-6xl rotate-[-15deg]">
-                  <Banana size={60} />
-                </div>
-                <div className="floating-icon absolute top-1/2 -right-12 -translate-y-1/2 text-amber-400/50 opacity-100 text-6xl rotate-20">
-                  <Pizza size={60} />
                 </div>
               </div>
             </div>

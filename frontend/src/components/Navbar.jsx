@@ -68,18 +68,18 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2 group relative z-50">
-            <img
-              src={Logodemo}
-              alt="Bharti Food"
-              className={`object-contain transition-all duration-500 ${
-                scrolled ? "w-16 h-16" : "w-20 h-20"
-              }`}
-            />
-          </Link>
+        <Link to="/" className="flex items-center gap-2 group relative z-50">
+          <img
+            src={Logodemo}
+            alt="Bharti Food"
+            className={`object-contain transition-all duration-500 ${
+              scrolled ? "w-16 h-16" : "w-20 h-20"
+            }`}
+          />
+        </Link>
 
-          {/* Search Bar (Desktop) */}
+        {/* Desktop Navigation & Search */}
+        <div className="flex items-center gap-8">
           <div className="hidden lg:flex items-center relative group">
             <div className="flex items-center bg-stone-100/50 border border-stone-200 rounded-full px-4 py-2 w-72 transition-all duration-300 focus-within:border-amber-500 focus-within:bg-white shadow-sm">
               <button
@@ -99,10 +99,7 @@ const Navbar = () => {
               />
             </div>
           </div>
-        </div>
 
-        {/* Desktop Navigation */}
-        <div className="flex items-center gap-8">
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link, index) => (
               <li key={index}>

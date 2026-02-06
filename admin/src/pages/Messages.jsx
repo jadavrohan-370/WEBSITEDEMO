@@ -18,6 +18,7 @@ const Messages = () => {
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [replyText, setReplyText] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchMessages = async () => {
     try {
@@ -96,6 +97,14 @@ const Messages = () => {
     }
   };
 
+  const filteredMessages = messages.filter(
+    (msg) =>
+      msg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      msg.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      msg.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      msg.message.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <div className="min-h-screen bg-slate-50/50">
       <Navbar title="Messages & Inquiries" />
@@ -115,44 +124,68 @@ const Messages = () => {
                 <input
                   className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                   placeholder="Search messages..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
             <div className="overflow-y-auto flex-1 p-2 space-y-2">
-              {messages.map((msg) => (
-                <div
-                  key={msg._id}
-                  onClick={() => handleSelect(msg)}
-                  className={`p-4 rounded-xl cursor-pointer transition-all border border-transparent hover:bg-slate-50 group relative ${selectedMessage?._id === msg._id ? "bg-indigo-50 border-indigo-100 shadow-sm" : msg.status === "read" ? "opacity-75" : "bg-white shadow-sm border-slate-100"}`}
-                >
-                  {msg.status === "unread" && (
-                    <div className="absolute top-4 right-4 w-2 h-2 bg-indigo-500 rounded-full"></div>
-                  )}
-                  <div className="flex justify-between items-start mb-1">
-                    <h4
-                      className={`text-sm font-bold ${msg.status === "read" ? "text-slate-600" : "text-slate-900"}`}
-                    >
-                      {msg.name}
-                    </h4>
-                    <span className="text-xs text-slate-400 whitespace-nowrap">
-                      {new Date(msg.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <p className="text-sm font-medium text-slate-800 truncate mb-1">
-                    {msg.subject}
-                  </p>
-                  <p className="text-xs text-slate-500 truncate">
-                    {msg.message}
-                  </p>
-
-                  <button
-                    onClick={(e) => handleDelete(msg._id, e)}
-                    className="absolute bottom-2 right-2 p-1 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-sm rounded-md"
+              {loading ? (
+                Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="p-4 rounded-xl border border-slate-100 bg-white/50 animate-pulse"
                   >
-                    <Trash2 size={14} />
-                  </button>
+                    <div className="h-4 bg-slate-200 rounded w-1/2 mb-2"></div>
+                    <div className="h-3 bg-slate-100 rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-slate-100 rounded w-1/4"></div>
+                  </div>
+                ))
+              ) : filteredMessages.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-10 text-slate-400 text-center px-4">
+                  <Mail size={40} className="mb-2 opacity-20" />
+                  <p className="text-sm">
+                    {searchTerm
+                      ? "No messages match your search"
+                      : "No messages yet"}
+                  </p>
                 </div>
-              ))}
+              ) : (
+                filteredMessages.map((msg) => (
+                  <div
+                    key={msg._id}
+                    onClick={() => handleSelect(msg)}
+                    className={`p-4 rounded-xl cursor-pointer transition-all border border-transparent hover:bg-slate-50 group relative ${selectedMessage?._id === msg._id ? "bg-indigo-50 border-indigo-100 shadow-sm" : msg.status === "read" ? "opacity-75" : "bg-white shadow-sm border-slate-100"}`}
+                  >
+                    {msg.status === "unread" && (
+                      <div className="absolute top-4 right-4 w-2 h-2 bg-indigo-500 rounded-full"></div>
+                    )}
+                    <div className="flex justify-between items-start mb-1">
+                      <h4
+                        className={`text-sm font-bold ${msg.status === "read" ? "text-slate-600" : "text-slate-900"}`}
+                      >
+                        {msg.name}
+                      </h4>
+                      <span className="text-xs text-slate-400 whitespace-nowrap">
+                        {new Date(msg.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <p className="text-sm font-medium text-slate-800 truncate mb-1">
+                      {msg.subject}
+                    </p>
+                    <p className="text-xs text-slate-500 truncate">
+                      {msg.message}
+                    </p>
+
+                    <button
+                      onClick={(e) => handleDelete(msg._id, e)}
+                      className="absolute bottom-2 right-2 p-1 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-sm rounded-md"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
