@@ -128,14 +128,14 @@ const Home = () => {
 
                 <div className="diamond-item absolute top-0 left-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://imgs.search.brave.com/GdzK-5Zsz_0ov6nJxpPBZRpqskqHMtROkjwZa_QWHzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by91cmFkLWRh/bC1yb2FzdGVkLXBh/cGFkLWluZGlhbi0y/NjBudy0yMTY0Mzc1/ODA1LmpwZw"
+                    src="https://imgs.search.brave.com/gX7k-v9KzojNjCgQ48mdpAldjiYsoTTaQEfew-bupMg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDUv/NTAwLzIyMy9zbWFs/bC9kZWxpY2lvdXMt/YXNpYW4tZGlzaC1y/aWNlLW5vb2RsZXMt/b3ItdWRvbi13aXRo/LXZlZ2V0YWJsZXMt/c3BpY2VzLWFuZC1o/ZXJicy1waG90by5K/UEc"
                     alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />
                 </div>
                 <div className="diamond-item absolute top-0 right-8 w-40 h-40 bg-white rotate-45 overflow-hidden border-4 border-stone-100 rounded-2xl shadow-lg z-10">
                   <img
-                    src="https://imgs.search.brave.com/GdzK-5Zsz_0ov6nJxpPBZRpqskqHMtROkjwZa_QWHzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/c2h1dHRlcnN0b2Nr/LmNvbS9pbWFnZS1w/aG90by91cmFkLWRh/bC1yb2FzdGVkLXBh/cGFkLWluZGlhbi0y/NjBudy0yMTY0Mzc1/ODA1LmpwZw"
+                    src="https://imgs.search.brave.com/gX7k-v9KzojNjCgQ48mdpAldjiYsoTTaQEfew-bupMg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDUv/NTAwLzIyMy9zbWFs/bC9kZWxpY2lvdXMt/YXNpYW4tZGlzaC1y/aWNlLW5vb2RsZXMt/b3ItdWRvbi13aXRo/LXZlZ2V0YWJsZXMt/c3BpY2VzLWFuZC1o/ZXJicy1waG90by5K/UEc"
                     alt="Papad"
                     className="w-full h-full object-cover -rotate-45 scale-150"
                   />

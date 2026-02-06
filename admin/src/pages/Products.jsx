@@ -169,7 +169,7 @@ const Products = () => {
     try {
       console.log("Uploading image to backend via Multer...");
       const uploadData = await imageService.upload(file);
-      console.log("Upload response:", uploadData);
+      // console.log("Upload response:", uploadData);
 
       if (uploadData.success) {
         console.log("Setting image URL:", uploadData.imageUrl);
