@@ -52,7 +52,16 @@ export const getProduct = async (req, res) => {
 // Create product
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, category, description, image, stock } = req.body || {};
+    const body = req.body && typeof req.body === "object" ? req.body : {};
+    const { name, price, category, description, image, stock } = body;
+
+    if (Object.keys(body).length === 0) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Request body is missing. Ensure Content-Type: application/json and include required fields.",
+      });
+    }
 
     // Validation
     if (!name || !price || !category || !description || !image) {
@@ -92,7 +101,8 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, category, description, image, stock } = req.body || {};
+    const body = req.body && typeof req.body === "object" ? req.body : {};
+    const { name, price, category, description, image, stock } = body;
 
     let product = await Product.findById(id);
 
