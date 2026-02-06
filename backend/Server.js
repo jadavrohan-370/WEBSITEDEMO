@@ -14,38 +14,45 @@ dotenv.config();
 
 const app = express();
 
-// CORS Configuration
+// CORS Configuration for Render Deployment
 const corsOptions = {
   origin: function (origin, callback) {
-    // TEMPORARY: Allow all origins for testing
-    // TODO: Restrict to specific origins in production
-    callback(null, true);
-
-    /* Production configuration - uncomment after testing:
+    // Define allowed origins for production (Render deployment)
     const allowedOrigins = [
+      // Local development
       "http://localhost:5173",
       "http://localhost:3000",
+      "http://localhost:4173",
+      // Vercel deployments
       "https://food-website-a9du.vercel.app",
       "https://food-website-eight-gamma.vercel.app",
+      // Render deployments (add your Render URLs here)
       process.env.FRONTEND_URL
         ? process.env.FRONTEND_URL.replace(/\/$/, "")
         : undefined,
       process.env.FRONTEND_URL_CLIENT
         ? process.env.FRONTEND_URL_CLIENT.replace(/\/$/, "")
         : undefined,
+      // Render frontend URLs (if different)
+      process.env.RENDER_FRONTEND_URL
+        ? process.env.RENDER_FRONTEND_URL.replace(/\/$/, "")
+        : undefined,
     ].filter(Boolean);
 
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    // In production, you might want to restrict this
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log(`CORS blocked origin: ${origin}`);
       callback(new Error("Not allowed by CORS"));
     }
-    */
   },
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
+  exposedHeaders: ["Content-Disposition"],
 };
 
 // Middleware
